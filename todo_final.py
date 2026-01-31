@@ -1,3 +1,10 @@
+# Keep alive for 24/7 hosting (Replit, Glitch, etc.)
+try:
+    from keep_alive import keep_alive
+    USE_KEEP_ALIVE = True
+except ImportError:
+    USE_KEEP_ALIVE = False
+
 import asyncio
 import json
 import os
@@ -14,11 +21,11 @@ from apscheduler.triggers.cron import CronTrigger
 import pytz
 
 # Bot tokenini environment variable dan olish (server uchun xavfsiz)
-BOT_TOKEN = os.getenv('BOT_TOKEN','8114466152:AAFlw1NuzjpV3r4NE35QYFUhj1xx9Om2xiY')
+BOT_TOKEN = os.getenv('BOT_TOKEN', '8114466152:AAFlw1NuzjpV3r4NE35QYFUhj1xx9Om2xiY')
 
 # ADMIN TELEGRAM ID - O'Z ID INGIZNI KIRITING!
 # ID ni olish uchun botga /myid yuboring
-ADMIN_ID = int(os.getenv('ADMIN_ID', '8132914660'))  # BU YERGA O'Z ID INGIZNI YOZING!
+ADMIN_ID = int(os.getenv('ADMIN_ID', '123456789'))  # BU YERGA O'Z ID INGIZNI YOZING!
 
 # Ma'lumotlar fayllari
 DATA_FILE = "schedules.json"
@@ -975,4 +982,9 @@ async def main():
 
 
 if __name__ == "__main__":
+    # 24/7 hosting uchun keep_alive ishga tushirish
+    if USE_KEEP_ALIVE:
+        keep_alive()
+        print("🌐 Keep-alive server ishga tushdi (24/7 hosting)")
+    
     asyncio.run(main())
